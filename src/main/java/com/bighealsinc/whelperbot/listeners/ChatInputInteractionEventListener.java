@@ -1,4 +1,4 @@
-package com.bighealsinc.whelperbot.services;
+package com.bighealsinc.whelperbot.listeners;
 
 import com.bighealsinc.whelperbot.commands.Command;
 import com.bighealsinc.whelperbot.listeners.EventListener;
