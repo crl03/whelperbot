@@ -65,8 +65,14 @@ public class BotConfiguration {
                 .description("Creates logging channels for member server joins and departures.")
                 .build();
 
+        ApplicationCommandRequest readOnlyCategoryCmdRequest = ApplicationCommandRequest.builder()
+                .name("createreadonlycategory")
+                .description("Creates read only category for logging channels.")
+                .build();
+
         list.add(todoCmdRequest);
         list.add(loggingChannelCmdRequest);
+        list.add(readOnlyCategoryCmdRequest);
 
         for (ApplicationCommandRequest command : list) {
             client.getRestClient().getApplicationService()
