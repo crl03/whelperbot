@@ -30,7 +30,7 @@ public abstract class GuildEventListener {
     }
 
     public void guildMemberDepart(MemberLeaveEvent event, String memberJoinChannel) {
-        GatewayDiscordClient client = event.getClient();
+        client = event.getClient();
         guildId = event.getGuildId().asLong();
         channelId = getChannelId(client, guildId, memberJoinChannel);
 
