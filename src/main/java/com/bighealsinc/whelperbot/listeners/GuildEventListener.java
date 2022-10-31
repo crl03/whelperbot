@@ -23,7 +23,8 @@ public abstract class GuildEventListener {
         channelId = getChannelId(client, guildId, memberJoinChannel);
 
         String message = "Member:\t" + event.getMember().getDisplayName() + "\n"
-                        + "Joined:\t\t" + new Date();
+                        + "Joined:\t\t" + new Date()
+                        + "\n";
 
         sendMemberMovementMessage(client, message);
 
@@ -35,7 +36,8 @@ public abstract class GuildEventListener {
         channelId = getChannelId(client, guildId, memberJoinChannel);
 
         String message = "Member: \t" + event.getUser().getUsername() + "\n"
-                + "Departed:\t" + new Date();
+                        + "Departed:\t" + new Date()
+                        + "\n";
 
         sendMemberMovementMessage(client, message);
 
