@@ -18,10 +18,10 @@ public class UserGuildsServiceImpl implements UserGuildsService {
     }
 
     @Override
-    public UserGuilds findUserGuildByCompositeId(int userId, int guildId) {
+    public UserGuilds findByCompositeId(int userId, int guildId) {
         Optional<UserGuilds> result = userGuildsRepository.findById(new UserGuildsPK(userId, guildId));
 
-        UserGuilds foundUserGuilds = null;
+        UserGuilds foundUserGuilds;
         if (result.isPresent()) {
             foundUserGuilds = result.get();
         } else {

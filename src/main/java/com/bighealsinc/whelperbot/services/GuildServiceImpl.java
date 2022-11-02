@@ -19,7 +19,7 @@ public class GuildServiceImpl implements GuildService {
     public Guild findById(int theId) {
         Optional<Guild> result = guildRepository.findById(theId);
 
-        Guild foundGuild = null;
+        Guild foundGuild;
         if (result.isPresent()) {
             foundGuild = result.get();
         } else {

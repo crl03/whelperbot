@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     public User findById(int theId) {
         Optional<User> result = userRepository.findById(theId);
 
-        User foundUser = null;
+        User foundUser;
         if (result.isPresent()) {
             foundUser = result.get();
         } else {
