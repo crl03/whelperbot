@@ -35,11 +35,11 @@ public class Guild {
     @JsonManagedReference
     private Set<User> guildUsers = new HashSet<>();
 
-//    public void addUser(User user) {
-//        if (guildUsers == null) {
-//            guildUsers = new HashSet<>();
-//        }
-//
-//        guildUsers.add(user);
-//    }
+    public void addUser(User user) {
+        if (guildUsers == null) {
+            guildUsers = new HashSet<>();
+        }
+
+        guildUsers.add(user);
+    }
 }

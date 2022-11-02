@@ -41,4 +41,13 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonManagedReference
     private Set<RaidSchedules> raids = new HashSet<>();
+
+    public void addGuild(Guild guild) {
+        if (userGuilds == null) {
+            userGuilds = new HashSet<>();
+        }
+
+        userGuilds.add(guild);
+
+    }
 }
