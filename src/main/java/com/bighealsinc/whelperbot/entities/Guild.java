@@ -10,21 +10,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "guilds")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Guild {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_id", unique = true)
-    private long discordId;
-
-    @Column(name = "user_name")
-    private String discordUserName;
+    @Column(name = "guild_id", unique = true)
+    private long guildId;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
@@ -32,13 +29,17 @@ public class User {
     )
     @JoinTable(
             name = "user_guilds",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "guild_id")
+            joinColumns = @JoinColumn(name = "guild_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @JsonManagedReference
-    private Set<Guild> userGuilds = new HashSet<>();
+    private Set<User> guildUsers = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonManagedReference
-    private Set<RaidSchedules> raids = new HashSet<>();
+    public void addUser(User user) {
+        if (guildUsers == null) {
+            guildUsers = new HashSet<>();
+        }
+
+        guildUsers.add(user);
+    }
 }

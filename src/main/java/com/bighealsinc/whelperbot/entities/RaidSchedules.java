@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "raid_schedules")
+@IdClass(RaidSchedulesPK.class)
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -18,12 +19,14 @@ public class RaidSchedules {
     @Column(name = "user_id", nullable = false)
     private int userId;
 
+    @Id
     @Column(name = "guild_id", nullable = false)
     private int guildId;
 
     @Column(name = "game", nullable = false)
     private String game;
 
+    @Id
     @Column(name = "raid_datetime", nullable = false)
     private LocalDateTime raidDateTime;
 
@@ -34,7 +37,8 @@ public class RaidSchedules {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonBackReference
     private User user;
 }
