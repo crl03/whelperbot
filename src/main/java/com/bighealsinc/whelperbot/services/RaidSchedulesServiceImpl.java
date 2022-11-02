@@ -3,6 +3,7 @@ package com.bighealsinc.whelperbot.services;
 import com.bighealsinc.whelperbot.entities.RaidSchedules;
 import com.bighealsinc.whelperbot.entities.RaidSchedulesPK;
 import com.bighealsinc.whelperbot.repositories.RaidSchedulesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -11,6 +12,7 @@ public class RaidSchedulesServiceImpl implements RaidSchedulesService {
 
     private RaidSchedulesRepository raidSchedulesRepository;
 
+    @Autowired
     public RaidSchedulesServiceImpl(RaidSchedulesRepository raidSchedulesRepository) {
         this.raidSchedulesRepository = raidSchedulesRepository;
 

@@ -2,6 +2,7 @@ package com.bighealsinc.whelperbot.services;
 
 import com.bighealsinc.whelperbot.entities.Guild;
 import com.bighealsinc.whelperbot.repositories.GuildRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,11 @@ import java.util.Optional;
 public class GuildServiceImpl implements GuildService {
 
     private GuildRepository guildRepository;
+
+    @Autowired
+    public GuildServiceImpl(GuildRepository guildRepository) {
+        this.guildRepository = guildRepository;
+    }
 
     @Override
     public List<Guild> findAll() {

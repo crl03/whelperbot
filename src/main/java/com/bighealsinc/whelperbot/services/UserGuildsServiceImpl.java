@@ -5,6 +5,7 @@ import com.bighealsinc.whelperbot.entities.User;
 import com.bighealsinc.whelperbot.entities.UserGuilds;
 import com.bighealsinc.whelperbot.entities.UserGuildsPK;
 import com.bighealsinc.whelperbot.repositories.UserGuildsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ public class UserGuildsServiceImpl implements UserGuildsService {
 
     private UserGuildsRepository userGuildsRepository;
 
+    @Autowired
     public UserGuildsServiceImpl (UserGuildsRepository userGuildsRepository) {
         this.userGuildsRepository = userGuildsRepository;
     }
