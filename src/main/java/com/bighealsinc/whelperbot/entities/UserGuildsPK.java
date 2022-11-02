@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Embeddable
 public class UserGuildsPK implements Serializable{
 
     @Column(name = "user_id")
@@ -25,6 +25,13 @@ public class UserGuildsPK implements Serializable{
         this.guildId = guildId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getGuildId() {
+        return guildId;
+    }
 
     @Override
     public boolean equals(Object o) {

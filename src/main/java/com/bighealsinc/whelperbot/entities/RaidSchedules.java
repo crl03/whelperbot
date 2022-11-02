@@ -8,27 +8,31 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "raid_schedules")
-@IdClass(RaidSchedulesPK.class)
+//@IdClass(RaidSchedulesPK.class)
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
 //@NoArgsConstructor
 public class RaidSchedules {
 
-    @Id
-    @Column(name = "user_id", nullable = false)
-    private int userId;
+//    @Id
+//    @Column(name = "user_id", nullable = false)
+//    private int userId;
+//
+//    @Id
+//    @Column(name = "guild_id", nullable = false)
+//    private int guildId;
 
-    @Id
-    @Column(name = "guild_id", nullable = false)
-    private int guildId;
+//    @Id
+//    @Column(name = "raid_datetime", nullable = false)
+//    private LocalDateTime raidDateTime;
+
+    @EmbeddedId
+    private RaidSchedulesPK raidSchedulesPK;
 
     @Column(name = "game", nullable = false)
     private String game;
 
-    @Id
-    @Column(name = "raid_datetime", nullable = false)
-    private LocalDateTime raidDateTime;
 
     // default property of nullable is true
     @Column(name = "game_server")

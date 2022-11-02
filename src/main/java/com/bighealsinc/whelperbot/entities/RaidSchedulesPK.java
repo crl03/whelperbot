@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Embeddable
 public class RaidSchedulesPK implements Serializable {
 
     @Column(name = "user_id")
@@ -25,6 +26,18 @@ public class RaidSchedulesPK implements Serializable {
         this.userId = userId;
         this.guildId = guildId;
         this.raidDateTime = raidDateTime;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getGuildId() {
+        return guildId;
+    }
+
+    public LocalDateTime getRaidDateTime() {
+        return raidDateTime;
     }
 
     @Override
