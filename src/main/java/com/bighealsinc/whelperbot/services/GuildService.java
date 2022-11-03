@@ -10,6 +10,8 @@ public interface GuildService {
 
     Guild findById(int theId);
 
+    Guild findByDiscordGuildId(long discordId);
+
     void save(Guild guild);
 
     void deleteById(int theId);

@@ -34,6 +34,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByDiscordId(long discordId) {
+        User result = userRepository.findByDiscordId(discordId);
+
+        // if result is null save new user into database
+
+//        Optional<User> result = Optional.ofNullable(userRepository.findByDiscordId(discordId));
+
+//        User foundUser;
+//        if (result.isPresent()) {
+//            foundUser = result.get();
+//        } else {
+//            throw new RuntimeException("Did not find user id: " + discordId);
+//        }
+        return result;
+    }
+
+    @Override
     public void save(User user) {
         userRepository.save(user);
 

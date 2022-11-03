@@ -35,6 +35,14 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
+    public Guild findByDiscordGuildId(long discordId) {
+        Guild result = guildRepository.findByDiscordGuildId(discordId);
+
+        // if result is null save a new guild into the database
+        return result;
+    }
+
+    @Override
     public void save(Guild guild) {
         guildRepository.save(guild);
     }
