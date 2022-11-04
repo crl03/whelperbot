@@ -6,17 +6,20 @@ import com.bighealsinc.whelperbot.entities.UserGuilds;
 import com.bighealsinc.whelperbot.entities.UserGuildsPK;
 import com.bighealsinc.whelperbot.repositories.UserGuildsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserGuildsServiceImpl implements UserGuildsService {
 
+    @Autowired
     private UserGuildsRepository userGuildsRepository;
 
     @Autowired
     public UserGuildsServiceImpl (UserGuildsRepository userGuildsRepository) {
-        this.userGuildsRepository = userGuildsRepository;
+        userGuildsRepository = userGuildsRepository;
     }
 
     @Override

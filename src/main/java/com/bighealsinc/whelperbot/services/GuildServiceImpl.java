@@ -3,17 +3,20 @@ package com.bighealsinc.whelperbot.services;
 import com.bighealsinc.whelperbot.entities.Guild;
 import com.bighealsinc.whelperbot.repositories.GuildRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class GuildServiceImpl implements GuildService {
 
+    @Autowired
     private GuildRepository guildRepository;
 
     @Autowired
     public GuildServiceImpl(GuildRepository guildRepository) {
-        this.guildRepository = guildRepository;
+        guildRepository = guildRepository;
     }
 
     @Override
@@ -35,8 +38,8 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
-    public Guild findByDiscordGuildId(long discordId) {
-        Guild result = guildRepository.findByDiscordGuildId(discordId);
+    public Optional<Guild> findByDiscordGuildId(long discordId) {
+        Optional<Guild> result = guildRepository.findByGuildId(discordId);
 
         // if result is null save a new guild into the database
         return result;

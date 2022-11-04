@@ -2,14 +2,17 @@ package com.bighealsinc.whelperbot.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "raid_schedules")
 //@IdClass(RaidSchedulesPK.class)
-@Data
+@Getter
+@Setter
+@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
 //@NoArgsConstructor
@@ -45,4 +48,17 @@ public class RaidSchedules {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonBackReference
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        RaidSchedules that = (RaidSchedules) o;
+        return raidSchedulesPK != null && Objects.equals(raidSchedulesPK, that.raidSchedulesPK);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(raidSchedulesPK);
+    }
 }

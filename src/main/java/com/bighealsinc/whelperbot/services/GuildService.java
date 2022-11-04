@@ -3,6 +3,7 @@ package com.bighealsinc.whelperbot.services;
 import com.bighealsinc.whelperbot.entities.Guild;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GuildService {
 
@@ -10,7 +11,7 @@ public interface GuildService {
 
     Guild findById(int theId);
 
-    Guild findByDiscordGuildId(long discordId);
+    Optional<Guild> findByDiscordGuildId(long discordId);
 
     void save(Guild guild);
 

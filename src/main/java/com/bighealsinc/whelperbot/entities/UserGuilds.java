@@ -1,19 +1,22 @@
 package com.bighealsinc.whelperbot.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_guilds")
 //@IdClass(UserGuildsPK.class)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class UserGuilds implements Serializable {
 
 //    @Id
@@ -47,4 +50,17 @@ public class UserGuilds implements Serializable {
     @JoinColumn(name = "guild_id", insertable = false, updatable = false)
     @JsonBackReference
     private Guild guild;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserGuilds that = (UserGuilds) o;
+        return userGuildsPK != null && Objects.equals(userGuildsPK, that.userGuildsPK);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userGuildsPK);
+    }
 }

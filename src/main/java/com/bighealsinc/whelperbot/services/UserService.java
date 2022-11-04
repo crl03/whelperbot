@@ -4,6 +4,7 @@ import com.bighealsinc.whelperbot.entities.User;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -11,7 +12,7 @@ public interface UserService {
 
     User findById(int theId);
 
-    User findByDiscordId(long discordId);
+    Optional<User> findByDiscordId(long discordId);
 
     void save(User user);
 

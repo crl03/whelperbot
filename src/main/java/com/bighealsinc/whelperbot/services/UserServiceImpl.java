@@ -3,17 +3,20 @@ package com.bighealsinc.whelperbot.services;
 import com.bighealsinc.whelperbot.entities.User;
 import com.bighealsinc.whelperbot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     public  UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        userRepository = userRepository;
     }
     @Override
     public List<User> findAll() {
@@ -34,8 +37,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByDiscordId(long discordId) {
-        User result = userRepository.findByDiscordId(discordId);
+    public Optional<User> findByDiscordId(long discordId) {
+        Optional<User> result = userRepository.findByDiscordId(discordId);
 
         // if result is null save new user into database
 
