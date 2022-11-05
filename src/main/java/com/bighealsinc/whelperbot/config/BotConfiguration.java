@@ -70,9 +70,15 @@ public class BotConfiguration {
                 .description("Creates read only category for logging channels.")
                 .build();
 
+        ApplicationCommandRequest myStatsCmdRequest = ApplicationCommandRequest.builder()
+                .name("mystats")
+                .description("View your personal stats.")
+                .build();
+
         list.add(todoCmdRequest);
         list.add(loggingChannelCmdRequest);
         list.add(readOnlyCategoryCmdRequest);
+        list.add(myStatsCmdRequest);
 
         for (ApplicationCommandRequest command : list) {
             client.getRestClient().getApplicationService()
