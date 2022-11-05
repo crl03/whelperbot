@@ -14,8 +14,6 @@ public abstract class MessageListener {
     @Autowired
     private DbHelpers dbHelpers;
 
-    @Autowired
-    private UserGuildsService userGuildsService;
     private String message;
     private String command;
     public Mono<Void> processCommand(Message eventMessage) {
@@ -30,9 +28,7 @@ public abstract class MessageListener {
 
             UserGuilds userGuild = dbHelpers.getUserGuild(userDiscordId, userDiscordName, discordGuildId);
 
-            // move this into db helpers
-            userGuild.setMessages(userGuild.getMessages() + 1);
-            userGuildsService.save(userGuild);
+            dbHelpers.incrementMessageCount(userGuild);
         }
 
 

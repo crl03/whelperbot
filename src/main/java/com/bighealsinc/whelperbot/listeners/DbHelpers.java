@@ -6,6 +6,7 @@ import com.bighealsinc.whelperbot.entities.UserGuilds;
 import com.bighealsinc.whelperbot.services.GuildService;
 import com.bighealsinc.whelperbot.services.UserGuildsService;
 import com.bighealsinc.whelperbot.services.UserService;
+import discord4j.core.event.domain.message.ReactionAddEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,5 +82,19 @@ public class DbHelpers {
         System.out.println("Found DB guildId: " + guildId);
         System.out.println("Returning UserGuilds: " + userGuildsService.findByCompositeId(userId, guildId));
         return userGuildsService.findByCompositeId(userId, guildId);
+    }
+
+    public void incrementMessageCount(UserGuilds userGuild) {
+        userGuild.setMessages(userGuild.getMessages() + 1);
+        userGuildsService.save(userGuild);
+    }
+
+    public void incrementReactionCount(UserGuilds userGuild) {
+        userGuild.setReactions(userGuild.getReactions() + 1);
+        userGuildsService.save(userGuild);
+    }
+
+    public void incrementRaidScheduleCount() {
+
     }
 }
