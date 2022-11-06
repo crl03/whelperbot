@@ -39,6 +39,11 @@ public class Guild {
     @ToString.Exclude
     private Set<User> guildUsers = new HashSet<>();
 
+    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonManagedReference
+    @ToString.Exclude
+    private Set<RaidSchedules> raidSchedules = new HashSet<>();
+
     public void addUser(User user) {
         if (guildUsers == null) {
             guildUsers = new HashSet<>();

@@ -29,9 +29,9 @@ public class ScheduleRaid extends CommandListener implements Command {
                         ActionRow.of(TextInput.small("server-name", "Server Name")
                                 .required(false))
                 ).addComponent(
-                        ActionRow.of(TextInput.small("date", "Date (MM/DD/YY)"))
+                        ActionRow.of(TextInput.small("date", "Date (MM/DD/YY)", 8, 8))
                 ).addComponent(
-                        ActionRow.of(TextInput.small("time", "Time (HH:MM AM/PM)"))
+                        ActionRow.of(TextInput.small("time", "Time (HH:MM AM/PM)", 8, 8))
                 )
 //                .addComponent(
 //                        ActionRow.of(SelectMenu.of("time",

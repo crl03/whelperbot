@@ -44,10 +44,15 @@ public class RaidSchedules {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonBackReference
     private User user;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "guild_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private Guild guild;
 
     @Override
     public boolean equals(Object o) {

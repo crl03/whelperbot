@@ -41,12 +41,12 @@ public class UserGuilds implements Serializable {
     @Column(name = "scheduled_raids")
     private int scheduledRaids;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonBackReference
     private User user;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name = "guild_id", insertable = false, updatable = false)
     @JsonBackReference
     private Guild guild;

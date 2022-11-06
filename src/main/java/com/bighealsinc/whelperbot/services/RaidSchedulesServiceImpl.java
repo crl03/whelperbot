@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,16 +23,21 @@ public class RaidSchedulesServiceImpl implements RaidSchedulesService {
     }
 
     @Override
-    public RaidSchedules findByCompositeId(int userId, int guildId, LocalDateTime raidDateTime) {
+    public Optional<RaidSchedules> findByCompositeId(int userId, int guildId, LocalDateTime raidDateTime) {
         Optional<RaidSchedules> result = raidSchedulesRepository.findById(new RaidSchedulesPK(userId, guildId, raidDateTime));
 
-        RaidSchedules foundRaidSchedule;
-        if (result.isPresent()) {
-            foundRaidSchedule = result.get();
-        } else {
-            throw new RuntimeException("Cannot find RaidSchedulesPK: " + userId + guildId + raidDateTime);
-        }
-        return foundRaidSchedule;
+//        RaidSchedules foundRaidSchedule;
+//        if (result.isPresent()) {
+//            foundRaidSchedule = result.get();
+//        } else {
+//            throw new RuntimeException("Cannot find RaidSchedulesPK: " + userId + guildId + raidDateTime);
+//        }
+        return result;
+    }
+
+    @Override
+    public List<RaidSchedules> findAllByGuildId(int guildId) {
+        return raidSchedulesRepository.findAllByGuildId(guildId);
     }
 
     @Override

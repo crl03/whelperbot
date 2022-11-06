@@ -1,15 +1,13 @@
 package com.bighealsinc.whelperbot.listeners;
 
-import com.bighealsinc.whelperbot.entities.Guild;
-import com.bighealsinc.whelperbot.entities.RaidSchedules;
-import com.bighealsinc.whelperbot.entities.User;
-import com.bighealsinc.whelperbot.entities.UserGuilds;
+import com.bighealsinc.whelperbot.entities.*;
 import com.bighealsinc.whelperbot.services.GuildService;
 import com.bighealsinc.whelperbot.services.RaidSchedulesService;
 import com.bighealsinc.whelperbot.services.UserGuildsService;
 import com.bighealsinc.whelperbot.services.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,10 +23,11 @@ public class DbHelpers {
 
     private RaidSchedulesService raidSchedulesService;
 
-    public DbHelpers(UserService userService, GuildService guildService, UserGuildsService userGuildsService) {
+    public DbHelpers(UserService userService, GuildService guildService, UserGuildsService userGuildsService, RaidSchedulesService raidSchedulesService) {
         this.userService = userService;
         this.guildService = guildService;
         this.userGuildsService = userGuildsService;
+        this.raidSchedulesService = raidSchedulesService;
     }
 
     public void checkUserAndGuild(long userDiscordId, String userDiscordName, long discordGuildId) {
@@ -89,11 +88,34 @@ public class DbHelpers {
         return userGuildsService.findAllByGuildId(tempGuild.get().getId());
     }
 
-    public RaidSchedules getRaidSchedules(long userDiscordId, String userDiscordName, long discordGuildId) {
+    public List<RaidSchedules> getGuildRaidSchedules(long userDiscordId, String userDiscordName, long discordGuildId) {
         checkUserAndGuild(userDiscordId, userDiscordName, discordGuildId);
 
-        //TODO finish creation of raid schedule
-        return null;
+        int guildDbId = guildService.findByDiscordGuildId(discordGuildId).get().getId();
+
+        return raidSchedulesService.findAllByGuildId(guildDbId);
+    }
+
+    public RaidSchedulesPK createUserRaidSchedulePK(long userDiscordId, String userDiscordName, long discordGuildId, LocalDateTime dateTime) {
+        checkUserAndGuild(userDiscordId, userDiscordName, discordGuildId);
+
+        int guildDbId = guildService.findByDiscordGuildId(discordGuildId).get().getId();
+        int userDBId = userService.findByDiscordId(userDiscordId).get().getId();
+
+        RaidSchedulesPK newUserRaidSchedulePK = new RaidSchedulesPK(userDBId, guildDbId, dateTime);
+
+        return newUserRaidSchedulePK;
+    }
+
+    public void saveNewUserRaidSchedule(RaidSchedulesPK raidSchedulesPK, String gameName, String serverName) {
+        RaidSchedules newUserRaidSchedule = new RaidSchedules();
+
+        newUserRaidSchedule.setRaidSchedulesPK(raidSchedulesPK);
+        newUserRaidSchedule.setGame(gameName);
+        newUserRaidSchedule.setGameServer(serverName);
+        newUserRaidSchedule.setActive(true);
+
+        raidSchedulesService.save(newUserRaidSchedule);
     }
 
     public void incrementMessageCount(UserGuilds userGuild) {
@@ -106,7 +128,8 @@ public class DbHelpers {
         userGuildsService.save(userGuild);
     }
 
-    public void incrementRaidScheduleCount() {
-
+    public void incrementRaidScheduleCount(UserGuilds userGuild) {
+        userGuild.setScheduledRaids(userGuild.getScheduledRaids() + 1);
+        userGuildsService.save(userGuild);
     }
 }

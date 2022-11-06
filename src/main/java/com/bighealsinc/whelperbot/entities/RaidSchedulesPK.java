@@ -40,6 +40,10 @@ public class RaidSchedulesPK implements Serializable {
         return raidDateTime;
     }
 
+    public void setRaidDateTime(LocalDateTime dateTime) {
+        this.raidDateTime = dateTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
