@@ -75,6 +75,11 @@ public class BotConfiguration {
                 .description("View your personal stats.")
                 .build();
 
+        ApplicationCommandRequest mostactiveCmdRequest = ApplicationCommandRequest.builder()
+                .name("mostactive")
+                .description("View most active user.")
+                .build();
+
         ApplicationCommandRequest scheduleRaidCmdRequest = ApplicationCommandRequest.builder()
                 .name("scheduleraid")
                 .description("Enter info to schedule date/time of riad.")
@@ -84,6 +89,7 @@ public class BotConfiguration {
         list.add(loggingChannelCmdRequest);
         list.add(readOnlyCategoryCmdRequest);
         list.add(myStatsCmdRequest);
+        list.add(mostactiveCmdRequest);
         list.add(scheduleRaidCmdRequest);
 
         for (ApplicationCommandRequest command : list) {

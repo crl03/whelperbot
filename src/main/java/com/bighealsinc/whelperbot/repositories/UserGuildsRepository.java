@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface UserGuildsRepository extends JpaRepository<UserGuilds, UserGuildsPK> {
 
+    List<UserGuilds> findAllByGuildId(int guildId);
+
 }

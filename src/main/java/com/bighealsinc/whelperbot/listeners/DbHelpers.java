@@ -1,15 +1,14 @@
 package com.bighealsinc.whelperbot.listeners;
 
 import com.bighealsinc.whelperbot.entities.Guild;
+import com.bighealsinc.whelperbot.entities.RaidSchedules;
 import com.bighealsinc.whelperbot.entities.User;
 import com.bighealsinc.whelperbot.entities.UserGuilds;
 import com.bighealsinc.whelperbot.services.GuildService;
+import com.bighealsinc.whelperbot.services.RaidSchedulesService;
 import com.bighealsinc.whelperbot.services.UserGuildsService;
 import com.bighealsinc.whelperbot.services.UserService;
-import discord4j.core.event.domain.message.ReactionAddEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +22,8 @@ public class DbHelpers {
     private GuildService guildService;
 
     private UserGuildsService userGuildsService;
+
+    private RaidSchedulesService raidSchedulesService;
 
     public DbHelpers(UserService userService, GuildService guildService, UserGuildsService userGuildsService) {
         this.userService = userService;
@@ -67,8 +68,6 @@ public class DbHelpers {
             }
         }
 
-
-
     }
 
     public UserGuilds getUserGuild(long userDiscordId, String userDiscordName, long discordGuildId) {
@@ -82,6 +81,19 @@ public class DbHelpers {
         System.out.println("Found DB guildId: " + guildId);
         System.out.println("Returning UserGuilds: " + userGuildsService.findByCompositeId(userId, guildId));
         return userGuildsService.findByCompositeId(userId, guildId);
+    }
+
+    public List<UserGuilds> getAllUsersGuild(long discordGuildId) {
+        Optional<Guild> tempGuild = guildService.findByDiscordGuildId(discordGuildId);
+
+        return userGuildsService.findAllByGuildId(tempGuild.get().getId());
+    }
+
+    public RaidSchedules getRaidSchedules(long userDiscordId, String userDiscordName, long discordGuildId) {
+        checkUserAndGuild(userDiscordId, userDiscordName, discordGuildId);
+
+        //TODO finish creation of raid schedule
+        return null;
     }
 
     public void incrementMessageCount(UserGuilds userGuild) {

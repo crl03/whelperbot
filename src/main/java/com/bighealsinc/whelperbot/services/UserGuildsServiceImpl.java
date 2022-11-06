@@ -8,6 +8,7 @@ import com.bighealsinc.whelperbot.repositories.UserGuildsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,14 @@ public class UserGuildsServiceImpl implements UserGuildsService {
             throw new RuntimeException("Cannot find UserGuildsPK: " + userId + guildId);
         }
         return foundUserGuilds;
+    }
+
+    @Override
+    public List<UserGuilds> findAllByGuildId(int guildId) {
+        List<UserGuilds> userlist = userGuildsRepository.findAllByGuildId(guildId);
+
+
+        return userlist;
     }
 
     @Override
