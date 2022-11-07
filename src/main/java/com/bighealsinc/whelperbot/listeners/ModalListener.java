@@ -35,10 +35,10 @@ public abstract class ModalListener {
 
         for (TextInput component : event.getComponents(TextInput.class)) {
             switch (component.getCustomId()) {
-                case "game-name": gameName = component.getValue().get(); break;
-                case "server-name": serverName = component.getValue().get(); break;
-                case "date": date = component.getValue().get(); break;
-                case "time": time = component.getValue().get(); break;
+                case "game-name" -> gameName = component.getValue().get();
+                case "server-name" -> serverName = component.getValue().get();
+                case "date" -> date = component.getValue().get();
+                case "time" -> time = component.getValue().get();
             }
         }
 
@@ -60,6 +60,8 @@ public abstract class ModalListener {
         if (formatTime[2].equalsIgnoreCase("pm") && !formatTime[0].equalsIgnoreCase("12")) {
             String hours = String.valueOf((12 + Integer.parseInt(formatTime[0])));
             combinedDateTime.append(hours);
+        } else if (formatTime[2].equalsIgnoreCase("am") && formatTime[0].equalsIgnoreCase("12")) {
+            combinedDateTime.append("00");
         } else {
             combinedDateTime.append(formatTime[0]);
         }

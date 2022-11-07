@@ -5,6 +5,7 @@ import com.bighealsinc.whelperbot.services.GuildService;
 import com.bighealsinc.whelperbot.services.RaidSchedulesService;
 import com.bighealsinc.whelperbot.services.UserGuildsService;
 import com.bighealsinc.whelperbot.services.UserService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -93,7 +94,7 @@ public class DbHelpers {
 
         int guildDbId = guildService.findByDiscordGuildId(discordGuildId).get().getId();
 
-        return raidSchedulesService.findAllByGuildId(guildDbId);
+        return raidSchedulesService.findAllByGuildId(guildDbId, Sort.by(Sort.Direction.ASC, "raidSchedulesPK"));
     }
 
     public RaidSchedulesPK createUserRaidSchedulePK(long userDiscordId, String userDiscordName, long discordGuildId, LocalDateTime dateTime) {

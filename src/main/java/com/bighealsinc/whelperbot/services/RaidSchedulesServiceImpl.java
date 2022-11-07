@@ -4,6 +4,7 @@ import com.bighealsinc.whelperbot.entities.RaidSchedules;
 import com.bighealsinc.whelperbot.entities.RaidSchedulesPK;
 import com.bighealsinc.whelperbot.repositories.RaidSchedulesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,8 +37,8 @@ public class RaidSchedulesServiceImpl implements RaidSchedulesService {
     }
 
     @Override
-    public List<RaidSchedules> findAllByGuildId(int guildId) {
-        return raidSchedulesRepository.findAllByGuildId(guildId);
+    public List<RaidSchedules> findAllByGuildId(int guildId, Sort sort) {
+        return raidSchedulesRepository.findAllByGuildId(guildId, sort);
     }
 
     @Override
