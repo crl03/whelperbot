@@ -53,9 +53,9 @@ public abstract class ModalListener {
         combinedDateTime.append("20");
         combinedDateTime.append(formatDate[2]);
         combinedDateTime.append("-");
-        combinedDateTime.append(formatDate[1]);
-        combinedDateTime.append("-");
         combinedDateTime.append(formatDate[0]);
+        combinedDateTime.append("-");
+        combinedDateTime.append(formatDate[1]);
         combinedDateTime.append("T");
         if (formatTime[2].equalsIgnoreCase("pm") && !formatTime[0].equalsIgnoreCase("12")) {
             String hours = String.valueOf((12 + Integer.parseInt(formatTime[0])));

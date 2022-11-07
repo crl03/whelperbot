@@ -85,12 +85,18 @@ public class BotConfiguration {
                 .description("Enter info to schedule date/time of riad.")
                 .build();
 
+        ApplicationCommandRequest listRaidsCmdRequest = ApplicationCommandRequest.builder()
+                .name("listraids")
+                .description("View list of active raids.")
+                .build();
+
         list.add(todoCmdRequest);
         list.add(loggingChannelCmdRequest);
         list.add(readOnlyCategoryCmdRequest);
         list.add(myStatsCmdRequest);
         list.add(mostactiveCmdRequest);
         list.add(scheduleRaidCmdRequest);
+        list.add(listRaidsCmdRequest);
 
         for (ApplicationCommandRequest command : list) {
             client.getRestClient().getApplicationService()

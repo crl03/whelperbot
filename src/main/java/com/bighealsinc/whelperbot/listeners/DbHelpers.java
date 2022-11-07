@@ -115,7 +115,11 @@ public class DbHelpers {
         newUserRaidSchedule.setGameServer(serverName);
         newUserRaidSchedule.setActive(true);
 
-        raidSchedulesService.save(newUserRaidSchedule);
+        updateRaidSchedule(newUserRaidSchedule);
+    }
+
+    public void updateRaidSchedule(RaidSchedules raid) {
+        raidSchedulesService.save(raid);
     }
 
     public void incrementMessageCount(UserGuilds userGuild) {
