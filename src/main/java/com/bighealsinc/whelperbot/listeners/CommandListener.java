@@ -43,6 +43,7 @@ public abstract class CommandListener {
 
         List<RaidSchedules> raidSchedulesList = dbHelpers.getGuildRaidSchedules(userDiscordId, userDiscordName, discordGuildId);
 
+        boolean areActiveRaids = false;
         StringBuilder message = new StringBuilder();
         message.append("Active Raids:\n");
 
@@ -59,12 +60,15 @@ public abstract class CommandListener {
 
             String formattedDateTime = raid.getRaidSchedulesPK().getRaidDateTime().format(formatter);
             if (raid.isActive()) {
-                System.out.println(formattedDateTime);
+                areActiveRaids = true;
                 message.append(formattedDateTime).append("\n")
                         .append("\t\tGame:\t ").append(raid.getGame()).append("\n")
                         .append("\t\tServer:\t").append(raid.getGameServer()).append("\n");
             }
         }
+
+        if (!areActiveRaids) message.append("None");
+
         return event.reply()
                 .withEphemeral(true)
                 .withContent(message.toString());
