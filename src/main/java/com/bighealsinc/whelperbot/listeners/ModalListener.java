@@ -2,11 +2,19 @@ package com.bighealsinc.whelperbot.listeners;
 
 import com.bighealsinc.whelperbot.entities.RaidSchedulesPK;
 import com.bighealsinc.whelperbot.entities.UserGuilds;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import discord4j.core.event.domain.interaction.ModalSubmitInteractionEvent;
 import discord4j.core.object.component.TextInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -15,12 +23,19 @@ public abstract class ModalListener {
     @Autowired
     private DbHelpers dbHelpers;
 
+    @Value("&appid=${openWeatherToken}")
+    private String openWeatherToken;
+
+
+
     public Mono<Void> processModal(ModalSubmitInteractionEvent event) {
         Mono<Void> result = null;
 
-        if ("raid".equals(event.getCustomId())) {
-            result = processRaid(event);
+        switch (event.getCustomId()) {
+            case "raid" -> result = processRaid(event);
+            case "weather" -> result = processWeather(event);
         }
+
         return result;
     }
 
@@ -87,5 +102,74 @@ public abstract class ModalListener {
                 .withEphemeral(true)
                 .withContent("Raid has been scheduled.");
 
+    }
+
+    private Mono<Void> processWeather(ModalSubmitInteractionEvent event) {
+        String zipCode = "";
+        for (TextInput component : event.getComponents(TextInput.class)) {
+            if (component.getCustomId().equalsIgnoreCase("zipcode")) {
+                zipCode = component.getValue().get();
+                break;
+            }
+        }
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest zipCodeRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://api.openweathermap.org/geo/1.0/zip?zip="+ zipCode + ",US" + openWeatherToken))
+                .GET()
+                .build();
+        HttpResponse<String> zipCodeResponse;
+        HttpResponse<String> weatherResponse;
+        String lat = "";
+        String lon = "";
+        String message = "";
+        String city = "";
+
+        try {
+            System.out.println(zipCodeRequest.uri());
+            zipCodeResponse = client.send(zipCodeRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println(zipCodeResponse.body());
+            if (zipCodeResponse.statusCode() == 404) {
+                return event.reply()
+                        .withEphemeral(true)
+                        .withContent("Cannot find zip code.");
+            }
+            JsonNode tempNode = new ObjectMapper().readTree(zipCodeResponse.body());
+            lat = tempNode.get("lat").asText();
+            lon = tempNode.get("lon").asText();
+            city = tempNode.get("name").asText();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("LAT: " + lat);
+        System.out.println("LON: " + lon);
+        HttpRequest weatherRequest = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon=" + lon + openWeatherToken + "&units=imperial"))
+                .build();
+
+        try {
+            weatherResponse = client.send(weatherRequest, HttpResponse.BodyHandlers.ofString());
+            JsonNode tempNode = new ObjectMapper().readTree(weatherResponse.body());
+            System.out.println(weatherResponse.body());
+            StringBuilder tempString = new StringBuilder();
+            tempString.append("Current weather in ").append(city).append(":\n")
+                    .append(tempNode.at("/weather").get(0).get("main").asText()).append(":\t\t ")
+                    .append((tempNode.at("/weather").get(0).get("description").asText()).substring(0,1).toUpperCase())
+                    .append((tempNode.at("/weather").get(0).get("description").asText()).substring(1)).append("\n")
+                    .append("Temp:\t\t\t").append(tempNode.at("/main/temp").asText()).append("\n")
+                    .append("Feels Like:\t ").append(tempNode.at("/main/feels_like").asText()).append("\n")
+                    .append("Min Temp:\t").append(tempNode.at("/main/temp_min").asText()).append("\n")
+                    .append("Max Temp:   ").append(tempNode.at("/main/temp_max").asText()).append("\n")
+                    .append("Humidity:\t ").append(tempNode.at("/main/humidity").asText()).append("\n")
+                    .append("Wind:\t\t\t").append(tempNode.at("/wind/speed").asText()).append("mph");
+            message = tempString.toString();
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return event.reply()
+                .withEphemeral(true)
+                .withContent(message);
     }
 }

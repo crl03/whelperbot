@@ -105,6 +105,11 @@ public class BotConfiguration {
                 .description("View list of active raids.")
                 .build();
 
+        ApplicationCommandRequest weatherCmdRequest = ApplicationCommandRequest.builder()
+                .name("weather")
+                .description("Get local current weather.")
+                .build();
+
         list.add(todoCmdRequest);
         list.add(loggingChannelCmdRequest);
         list.add(readOnlyCategoryCmdRequest);
@@ -112,6 +117,7 @@ public class BotConfiguration {
         list.add(mostactiveCmdRequest);
         list.add(scheduleRaidCmdRequest);
         list.add(listRaidsCmdRequest);
+        list.add(weatherCmdRequest);
 
         for (ApplicationCommandRequest command : list) {
             client.getRestClient().getApplicationService()
