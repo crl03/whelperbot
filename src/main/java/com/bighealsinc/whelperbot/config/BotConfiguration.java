@@ -23,7 +23,6 @@ public class BotConfiguration {
     @Value("${token}")
     private String token;
 
-    //TODO ABSTRACTED THIS
     private GatewayDiscordClient client;
     private List<ApplicationCommandRequest> list;
 

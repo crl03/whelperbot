@@ -25,8 +25,6 @@ public abstract class CommandListener {
     @Autowired
     private DbHelpers dbHelpers;
 
-    //TODO FIGURE OUT WHY THIS IS BROKEN
-
     @Autowired
     private BotConfiguration botConfiguration;
 
