@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class GuildEventListener {
 
-    GatewayDiscordClient client;
+    private GatewayDiscordClient client;
     private long guildId = 0;
     private long channelId = 0;
 

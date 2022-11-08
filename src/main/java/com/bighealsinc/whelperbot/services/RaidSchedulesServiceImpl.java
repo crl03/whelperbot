@@ -42,6 +42,11 @@ public class RaidSchedulesServiceImpl implements RaidSchedulesService {
     }
 
     @Override
+    public List<RaidSchedules> findAll() {
+        return raidSchedulesRepository.findAll();
+    }
+
+    @Override
     public void save(RaidSchedules raidSchedules) {
         raidSchedulesRepository.save(raidSchedules);
     }

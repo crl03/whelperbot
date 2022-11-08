@@ -8,23 +8,35 @@ import discord4j.core.object.presence.ClientActivity;
 import discord4j.core.object.presence.ClientPresence;
 import discord4j.discordjson.json.ApplicationCommandRequest;
 import discord4j.gateway.intent.IntentSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@EnableScheduling
 public class BotConfiguration {
     @Value("${token}")
     private String token;
 
+    //TODO ABSTRACTED THIS
+    private GatewayDiscordClient client;
     private List<ApplicationCommandRequest> list;
 
+
+    @Lazy
+    public BotConfiguration(GatewayDiscordClient client) {
+        this.client = client;
+    }
+
     @Bean
+    @Primary
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(List<EventListener<T>> eventListeners) {
-        GatewayDiscordClient client = DiscordClientBuilder.create(token)
+        client = DiscordClientBuilder.create(token)
                 .build()
                 .gateway()
                 .setEnabledIntents(IntentSet.all())
@@ -46,6 +58,10 @@ public class BotConfiguration {
         System.out.println("Finished iterating, returning client.");
 
         return client;
+    }
+
+    public GatewayDiscordClient getGatewayDiscordClient() {
+        return this.client;
     }
 
     @Bean

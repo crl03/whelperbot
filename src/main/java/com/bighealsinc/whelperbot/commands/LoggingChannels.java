@@ -19,11 +19,20 @@ public class LoggingChannels extends CommandListener implements Command {
         Snowflake readOnlyChannels = findChannelId(event, "Read Only Channels");
         Snowflake memberJoin = findChannelId(event, "member-join");
         Snowflake memberDeparture = findChannelId(event, "member-departures");
+        Snowflake raidReminders = findChannelId(event, "raid-reminders");
         if (readOnlyChannels == null) {
             return event.reply()
                     .withEphemeral(true)
                     .withContent("Please run command createreadonlycategory first.");
         }
+
+        if (raidReminders == null) {
+            event.getClient().getGuildById(Snowflake.of(1028801665492602880L))
+                    .flatMap(guild -> guild.createTextChannel("raid-reminders")
+                            .withParentId(readOnlyChannels)
+                    ).subscribe();
+        }
+
         if (memberJoin == null) {
             event.getClient().getGuildById(Snowflake.of(1028801665492602880L))
                     .flatMap(guild -> guild.createTextChannel("member-join")

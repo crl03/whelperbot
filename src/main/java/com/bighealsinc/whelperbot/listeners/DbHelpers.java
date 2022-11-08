@@ -5,6 +5,7 @@ import com.bighealsinc.whelperbot.services.GuildService;
 import com.bighealsinc.whelperbot.services.RaidSchedulesService;
 import com.bighealsinc.whelperbot.services.UserGuildsService;
 import com.bighealsinc.whelperbot.services.UserService;
+import discord4j.core.GatewayDiscordClient;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,8 @@ public class DbHelpers {
 
     private RaidSchedulesService raidSchedulesService;
 
-    public DbHelpers(UserService userService, GuildService guildService, UserGuildsService userGuildsService, RaidSchedulesService raidSchedulesService) {
+    public DbHelpers(UserService userService, GuildService guildService,
+                     UserGuildsService userGuildsService, RaidSchedulesService raidSchedulesService) {
         this.userService = userService;
         this.guildService = guildService;
         this.userGuildsService = userGuildsService;
@@ -97,6 +99,10 @@ public class DbHelpers {
         return raidSchedulesService.findAllByGuildId(guildDbId, Sort.by(Sort.Direction.ASC, "raidSchedulesPK"));
     }
 
+    public List<RaidSchedules> getAllRaidSchedules() {
+        return raidSchedulesService.findAll();
+    }
+
     public RaidSchedulesPK createUserRaidSchedulePK(long userDiscordId, String userDiscordName, long discordGuildId, LocalDateTime dateTime) {
         checkUserAndGuild(userDiscordId, userDiscordName, discordGuildId);
 
@@ -137,4 +143,5 @@ public class DbHelpers {
         userGuild.setScheduledRaids(userGuild.getScheduledRaids() + 1);
         userGuildsService.save(userGuild);
     }
+
 }
