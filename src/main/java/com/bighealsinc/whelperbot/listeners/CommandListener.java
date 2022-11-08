@@ -119,12 +119,14 @@ public abstract class CommandListener {
         boolean areActiveRaids = false;
         StringBuilder message = new StringBuilder();
         message.append(startMessage);
+        Duration between;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy hh:mm a")
                 .withLocale(Locale.getDefault())
                 .withZone(ZoneId.systemDefault());
         for (RaidSchedules raid : raidSchedulesList) {
-            if (raid.isActive() && raid.getRaidSchedulesPK().getRaidDateTime().isBefore(LocalDateTime.now())) {
+        between = Duration.between(LocalDateTime.now(), raid.getRaidSchedulesPK().getRaidDateTime());
+            if (raid.isActive() && between.toMinutes() < 0) {
                 raid.setActive(false);
                 dbHelpers.updateRaidSchedule(raid);
             }
