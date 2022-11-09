@@ -125,6 +125,11 @@ public class BotConfiguration {
                     .subscribe();
         }
 
+        // Deleted an old command.  Found ID through server settings.  Kept here for future reference.
+//        client.getRestClient().getApplicationService()
+//                .deleteGuildApplicationCommand(applicationId,guildId,1034841232993697863L)
+//                .subscribe();
+
         return client;
     }
 }

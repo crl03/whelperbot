@@ -153,14 +153,15 @@ public abstract class ModalListener {
             System.out.println(weatherResponse.body());
             StringBuilder tempString = new StringBuilder();
             tempString.append("Current weather in ").append(city).append(":\n")
-                    .append(tempNode.at("/weather").get(0).get("main").asText()).append(":\t\t ")
+//                    .append(tempNode.at("/weather").get(0).get("main").asText()).append(":\t\t ")
+                    .append("Overall:\t\t ")
                     .append((tempNode.at("/weather").get(0).get("description").asText()).substring(0,1).toUpperCase())
                     .append((tempNode.at("/weather").get(0).get("description").asText()).substring(1)).append("\n")
                     .append("Temp:\t\t\t").append(tempNode.at("/main/temp").asText()).append("\n")
                     .append("Feels Like:\t ").append(tempNode.at("/main/feels_like").asText()).append("\n")
                     .append("Min Temp:\t").append(tempNode.at("/main/temp_min").asText()).append("\n")
                     .append("Max Temp:   ").append(tempNode.at("/main/temp_max").asText()).append("\n")
-                    .append("Humidity:\t ").append(tempNode.at("/main/humidity").asText()).append("\n")
+                    .append("Humidity:\t ").append(tempNode.at("/main/humidity").asText()).append("%\n")
                     .append("Wind:\t\t\t").append(tempNode.at("/wind/speed").asText()).append("mph");
             message = tempString.toString();
 
