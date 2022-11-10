@@ -41,7 +41,6 @@ public class GuildServiceImpl implements GuildService {
     public Optional<Guild> findByDiscordGuildId(long discordId) {
         Optional<Guild> result = guildRepository.findByGuildId(discordId);
 
-        // if result is null save a new guild into the database
         return result;
     }
 

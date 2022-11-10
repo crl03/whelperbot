@@ -1,6 +1,5 @@
 package com.bighealsinc.whelperbot.listeners;
 
-import discord4j.core.event.domain.Event;
 import discord4j.core.event.domain.interaction.ModalSubmitInteractionEvent;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

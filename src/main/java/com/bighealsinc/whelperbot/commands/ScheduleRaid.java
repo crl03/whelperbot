@@ -3,7 +3,6 @@ package com.bighealsinc.whelperbot.commands;
 import com.bighealsinc.whelperbot.listeners.CommandListener;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.component.ActionRow;
-import discord4j.core.object.component.SelectMenu;
 import discord4j.core.object.component.TextInput;
 import discord4j.core.spec.InteractionPresentModalSpec;
 import org.springframework.stereotype.Component;

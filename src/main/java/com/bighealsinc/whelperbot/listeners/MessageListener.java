@@ -1,9 +1,6 @@
 package com.bighealsinc.whelperbot.listeners;
 
-import com.bighealsinc.whelperbot.commands.Command;
-import com.bighealsinc.whelperbot.entities.User;
 import com.bighealsinc.whelperbot.entities.UserGuilds;
-import com.bighealsinc.whelperbot.services.*;
 import discord4j.core.object.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
@@ -30,9 +27,6 @@ public abstract class MessageListener {
 
             dbHelpers.incrementMessageCount(userGuild);
         }
-
-
-        // update appropriate fields, for now messages and reactions
 
 
 //            return Mono.just(eventMessage)

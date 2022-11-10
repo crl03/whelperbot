@@ -1,7 +1,5 @@
 package com.bighealsinc.whelperbot.listeners;
 
-import com.bighealsinc.whelperbot.listeners.EventListener;
-import com.bighealsinc.whelperbot.listeners.MessageListener;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

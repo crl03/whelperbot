@@ -1,6 +1,5 @@
 package com.bighealsinc.whelperbot.commands;
 
-import com.bighealsinc.whelperbot.entities.User;
 import com.bighealsinc.whelperbot.entities.UserGuilds;
 import com.bighealsinc.whelperbot.listeners.CommandListener;
 import com.bighealsinc.whelperbot.listeners.DbHelpers;

@@ -7,9 +7,5 @@ import java.util.Optional;
 
 public interface GuildRepository extends JpaRepository<Guild, Integer> {
 
-//    @Query(
-//            value = "SELECT id FROM guilds g WHERE g.guild_id = :guildId",
-//            nativeQuery = true
-//    )
     Optional<Guild> findByGuildId(long guildId);
 }

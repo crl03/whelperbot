@@ -10,24 +10,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user_guilds")
-//@IdClass(UserGuildsPK.class)
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-//@NoArgsConstructor
 public class UserGuilds implements Serializable {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "user_id")
-//    private int userId;
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "guild_id")
-//    private int guildId;
 
     @EmbeddedId
     private UserGuildsPK userGuildsPK;

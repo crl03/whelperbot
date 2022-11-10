@@ -27,12 +27,6 @@ public class RaidSchedulesServiceImpl implements RaidSchedulesService {
     public Optional<RaidSchedules> findByCompositeId(int userId, int guildId, LocalDateTime raidDateTime) {
         Optional<RaidSchedules> result = raidSchedulesRepository.findById(new RaidSchedulesPK(userId, guildId, raidDateTime));
 
-//        RaidSchedules foundRaidSchedule;
-//        if (result.isPresent()) {
-//            foundRaidSchedule = result.get();
-//        } else {
-//            throw new RuntimeException("Cannot find RaidSchedulesPK: " + userId + guildId + raidDateTime);
-//        }
         return result;
     }
 

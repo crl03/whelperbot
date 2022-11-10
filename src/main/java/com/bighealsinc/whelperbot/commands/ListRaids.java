@@ -1,9 +1,7 @@
 package com.bighealsinc.whelperbot.commands;
 
 import com.bighealsinc.whelperbot.listeners.CommandListener;
-import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
-import discord4j.core.event.domain.message.MessageCreateEvent;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

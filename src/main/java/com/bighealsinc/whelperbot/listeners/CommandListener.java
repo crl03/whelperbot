@@ -3,15 +3,11 @@ package com.bighealsinc.whelperbot.listeners;
 import com.bighealsinc.whelperbot.config.BotConfiguration;
 import com.bighealsinc.whelperbot.entities.RaidSchedules;
 import discord4j.common.util.Snowflake;
-import discord4j.core.DiscordClient;
-import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.entity.channel.GuildChannel;
 import discord4j.core.object.entity.channel.MessageChannel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;

@@ -1,7 +1,6 @@
 package com.bighealsinc.whelperbot.services;
 
 import com.bighealsinc.whelperbot.entities.User;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;

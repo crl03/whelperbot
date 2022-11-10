@@ -1,14 +1,11 @@
 package com.bighealsinc.whelperbot.services;
 
-import com.bighealsinc.whelperbot.entities.Guild;
-import com.bighealsinc.whelperbot.entities.User;
 import com.bighealsinc.whelperbot.entities.UserGuilds;
 import com.bighealsinc.whelperbot.entities.UserGuildsPK;
 import com.bighealsinc.whelperbot.repositories.UserGuildsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

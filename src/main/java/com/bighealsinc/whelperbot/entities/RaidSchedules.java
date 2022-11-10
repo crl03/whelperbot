@@ -9,26 +9,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "raid_schedules")
-//@IdClass(RaidSchedulesPK.class)
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-//@NoArgsConstructor
 public class RaidSchedules {
-
-//    @Id
-//    @Column(name = "user_id", nullable = false)
-//    private int userId;
-//
-//    @Id
-//    @Column(name = "guild_id", nullable = false)
-//    private int guildId;
-
-//    @Id
-//    @Column(name = "raid_datetime", nullable = false)
-//    private LocalDateTime raidDateTime;
 
     @EmbeddedId
     private RaidSchedulesPK raidSchedulesPK;

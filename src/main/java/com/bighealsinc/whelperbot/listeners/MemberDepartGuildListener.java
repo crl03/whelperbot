@@ -1,6 +1,5 @@
 package com.bighealsinc.whelperbot.listeners;
 
-import discord4j.core.event.domain.guild.MemberJoinEvent;
 import discord4j.core.event.domain.guild.MemberLeaveEvent;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
