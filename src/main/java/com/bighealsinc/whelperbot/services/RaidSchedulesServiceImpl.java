@@ -52,7 +52,7 @@ public class RaidSchedulesServiceImpl implements RaidSchedulesService {
     }
 
     @Override
-    public void deleteByCompositeId(int userId, int guildId, LocalDateTime raidDateTime) {
-        raidSchedulesRepository.deleteById(new RaidSchedulesPK(userId, guildId, raidDateTime));
+    public void deleteByRaidSchedulesPK(RaidSchedulesPK raidSchedulesPK) {
+        raidSchedulesRepository.deleteById(raidSchedulesPK);
     }
 }

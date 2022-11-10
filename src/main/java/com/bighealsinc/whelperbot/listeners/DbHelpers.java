@@ -5,9 +5,9 @@ import com.bighealsinc.whelperbot.services.GuildService;
 import com.bighealsinc.whelperbot.services.RaidSchedulesService;
 import com.bighealsinc.whelperbot.services.UserGuildsService;
 import com.bighealsinc.whelperbot.services.UserService;
-import discord4j.core.GatewayDiscordClient;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -127,6 +127,19 @@ public class DbHelpers {
 
     public void updateRaidSchedule(RaidSchedules raid) {
         raidSchedulesService.save(raid);
+    }
+
+    public boolean deleteRaidSchedule(long userDiscordId, long discordGuildId, LocalDateTime dateTime) {
+        Optional<User> userId = userService.findByDiscordId(userDiscordId);
+        Optional<Guild> guildId = guildService.findByDiscordGuildId(discordGuildId);
+
+        if (userId.isPresent() && guildId.isPresent()) {
+            Optional<RaidSchedules> tempRaidSchedule = raidSchedulesService.findByCompositeId(userId.get().getId(), guildId.get().getId(), dateTime);
+            if (tempRaidSchedule.isEmpty()) return false;
+            tempRaidSchedule.ifPresent(raidSchedules -> raidSchedulesService.deleteByRaidSchedulesPK(raidSchedules.getRaidSchedulesPK()));
+            return true;
+        }
+        return false;
     }
 
     public void incrementMessageCount(UserGuilds userGuild) {

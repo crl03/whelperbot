@@ -105,6 +105,11 @@ public class BotConfiguration {
                 .description("View list of active raids.")
                 .build();
 
+        ApplicationCommandRequest deleteRaidCmdRequest = ApplicationCommandRequest.builder()
+                .name("deleteraid")
+                .description("Delete raid by date and time.")
+                .build();
+
         ApplicationCommandRequest weatherCmdRequest = ApplicationCommandRequest.builder()
                 .name("weather")
                 .description("Get local current weather.")
@@ -117,6 +122,7 @@ public class BotConfiguration {
         list.add(mostactiveCmdRequest);
         list.add(scheduleRaidCmdRequest);
         list.add(listRaidsCmdRequest);
+        list.add(deleteRaidCmdRequest);
         list.add(weatherCmdRequest);
 
         for (ApplicationCommandRequest command : list) {

@@ -16,7 +16,7 @@ public interface RaidSchedulesService {
 
     void save(RaidSchedules raidSchedules);
 
-    void deleteByCompositeId(int userId, int guildId, LocalDateTime raidDateTime);
+    void deleteByRaidSchedulesPK(RaidSchedulesPK raidSchedulesPK);
 
     List<RaidSchedules> findAll();
 }

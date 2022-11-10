@@ -17,6 +17,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public abstract class ModalListener {
 
@@ -34,6 +35,7 @@ public abstract class ModalListener {
         switch (event.getCustomId()) {
             case "raid" -> result = processRaid(event);
             case "weather" -> result = processWeather(event);
+            case "deleteraid" -> result = processDeleteRaid(event);
         }
 
         return result;
@@ -62,6 +64,51 @@ public abstract class ModalListener {
         System.out.println("date: " + date);
         System.out.println("time:" + time);
 
+        LocalDateTime dateTime = getDateTime(date, time);
+
+
+        RaidSchedulesPK tempUserRaidSchedulePK = dbHelpers.createUserRaidSchedulePK(userDiscordId, userDiscordName, discordGuildId, dateTime);
+
+        dbHelpers.saveNewUserRaidSchedule(tempUserRaidSchedulePK, gameName, serverName);
+
+        UserGuilds userGuild = dbHelpers.getUserGuild(userDiscordId, userDiscordName, discordGuildId);
+
+        dbHelpers.incrementRaidScheduleCount(userGuild);
+
+        return event.reply()
+                .withEphemeral(true)
+                .withContent("Raid has been scheduled.");
+
+    }
+
+    private Mono<Void> processDeleteRaid(ModalSubmitInteractionEvent event) {
+        String message = "Raid deleted.";
+        long userDiscordId = event.getInteraction().getUser().getId().asLong();
+        long discordGuildId = event.getInteraction().getGuildId().get().asLong();
+        String date = "";
+        String time = "";
+
+        for (TextInput component : event.getComponents(TextInput.class)) {
+            switch (component.getCustomId()) {
+                case "date" -> date = component.getValue().get();
+                case "time" -> time = component.getValue().get();
+            }
+        }
+
+        LocalDateTime dateTime = getDateTime(date, time);
+
+        boolean deleted = dbHelpers.deleteRaidSchedule(userDiscordId, discordGuildId, dateTime);
+
+        if (!deleted) {
+            message = "You have no raid scheduled at this date and time.";
+        };
+
+        return event.reply()
+                .withEphemeral(true)
+                .withContent(message);
+    }
+
+    private static LocalDateTime getDateTime(String date, String time) {
         StringBuilder combinedDateTime = new StringBuilder();
         String[] formatDate = date.split("/");
         String[] formatTime = time.split("[:\s]");
@@ -88,20 +135,7 @@ public abstract class ModalListener {
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime dateTime = LocalDateTime.parse(combinedDateTime, formatter);
-
-
-        RaidSchedulesPK tempUserRaidSchedulePK = dbHelpers.createUserRaidSchedulePK(userDiscordId, userDiscordName, discordGuildId, dateTime);
-
-        dbHelpers.saveNewUserRaidSchedule(tempUserRaidSchedulePK, gameName, serverName);
-
-        UserGuilds userGuild = dbHelpers.getUserGuild(userDiscordId, userDiscordName, discordGuildId);
-
-        dbHelpers.incrementRaidScheduleCount(userGuild);
-
-        return event.reply()
-                .withEphemeral(true)
-                .withContent("Raid has been scheduled.");
-
+        return dateTime;
     }
 
     private Mono<Void> processWeather(ModalSubmitInteractionEvent event) {
