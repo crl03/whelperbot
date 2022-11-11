@@ -71,6 +71,12 @@ public class DbHelpers {
 
     }
 
+    public User getUser(int userId) {
+        User tempUser = userService.findById(userId);
+
+        return tempUser;
+    }
+
     public UserGuilds getUserGuild(long userDiscordId, String userDiscordName, long discordGuildId) {
         System.out.println("Inside DbHelpers getUserGuild");
         checkUserAndGuild(userDiscordId, userDiscordName, discordGuildId);

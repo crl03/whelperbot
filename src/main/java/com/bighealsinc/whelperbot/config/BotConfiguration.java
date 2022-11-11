@@ -61,6 +61,10 @@ public class BotConfiguration {
         return this.client;
     }
 
+    public List<ApplicationCommandRequest> getCommandList() {
+        return this.list;
+    }
+
     @Bean
     public <T extends Event> GatewayDiscordClient commandRegistrar(GatewayDiscordClient client) {
         long applicationId = client.getRestClient().getApplicationId().block();
@@ -70,7 +74,7 @@ public class BotConfiguration {
 
         ApplicationCommandRequest todoCmdRequest = ApplicationCommandRequest.builder()
                 .name("todo")
-                .description("Returns your Todo list.")
+                .description("Returns your Todo list. (this is nostalgia for my first bot command test)")
                 .build();
 
         ApplicationCommandRequest loggingChannelCmdRequest = ApplicationCommandRequest.builder()
@@ -95,7 +99,7 @@ public class BotConfiguration {
 
         ApplicationCommandRequest scheduleRaidCmdRequest = ApplicationCommandRequest.builder()
                 .name("scheduleraid")
-                .description("Enter info to schedule date/time of riad.")
+                .description("Enter info to schedule date/time of riad, or update raid by entering its date and time.")
                 .build();
 
         ApplicationCommandRequest listRaidsCmdRequest = ApplicationCommandRequest.builder()
@@ -110,9 +114,15 @@ public class BotConfiguration {
 
         ApplicationCommandRequest weatherCmdRequest = ApplicationCommandRequest.builder()
                 .name("weather")
-                .description("Get local current weather.")
+                .description("Get local current weather by zip code.")
                 .build();
 
+        ApplicationCommandRequest helpCmdRequest = ApplicationCommandRequest.builder()
+                .name("help")
+                .description("List all available commands.")
+                .build();
+
+        list.add(helpCmdRequest);
         list.add(todoCmdRequest);
         list.add(loggingChannelCmdRequest);
         list.add(readOnlyCategoryCmdRequest);

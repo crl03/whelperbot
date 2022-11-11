@@ -2,11 +2,14 @@ package com.bighealsinc.whelperbot.listeners;
 
 import com.bighealsinc.whelperbot.config.BotConfiguration;
 import com.bighealsinc.whelperbot.entities.RaidSchedules;
+import com.bighealsinc.whelperbot.entities.User;
 import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
+import discord4j.core.event.domain.guild.MemberJoinEvent;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.object.entity.channel.GuildChannel;
 import discord4j.core.object.entity.channel.MessageChannel;
+import discord4j.discordjson.json.ApplicationCommandRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +27,26 @@ public abstract class CommandListener {
     @Autowired
     private BotConfiguration botConfiguration;
 
+
+    public Mono<Void> listCommands(ChatInputInteractionEvent event) {
+        List<ApplicationCommandRequest> commandList = botConfiguration.getCommandList();
+
+        return event.reply()
+                .withEphemeral(true)
+                .withContent(buildCommandList(commandList));
+    }
+
+    public String buildCommandList(List<ApplicationCommandRequest> commandList) {
+        StringBuilder message = new StringBuilder();
+
+        message.append("Available Commands:\n");
+
+        for (ApplicationCommandRequest command : commandList) {
+            message.append("/").append(command.name()).append(":\n\t\t").append(command.description().get()).append("\n\n");
+        }
+
+        return message.toString();
+    }
 
     public Snowflake findChannelId(ChatInputInteractionEvent event, String channelName) {
         HashMap<Long, String> channelList = new HashMap<>();
@@ -127,12 +150,16 @@ public abstract class CommandListener {
                 dbHelpers.updateRaidSchedule(raid);
             }
 
+            //TODO get username through dbHelpers
             String formattedDateTime = raid.getRaidSchedulesPK().getRaidDateTime().format(formatter);
+            User tempUser = dbHelpers.getUser(raid.getRaidSchedulesPK().getUserId());
+            String organizer = tempUser.getDiscordUserName();
             if (raid.isActive()) {
                 areActiveRaids = true;
                 message.append(formattedDateTime).append("\n")
-                        .append("\t\tGame:\t ").append(raid.getGame()).append("\n")
-                        .append("\t\tServer:\t").append(raid.getGameServer()).append("\n");
+                        .append("\t\tOrganizer:\t  ").append(organizer).append("\n")
+                        .append("\t\tGame:\t\t\t ").append(raid.getGame()).append("\n")
+                        .append("\t\tServer:\t\t\t").append(raid.getGameServer()).append("\n");
             }
         }
 
